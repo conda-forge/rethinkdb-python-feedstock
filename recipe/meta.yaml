@@ -10,8 +10,8 @@ source:
   sha256: 3634e03ee13dd637fd7196b80474bf44c64d3eba1dd069ea92b94926702a60bd
 
 build:
-  number: 0
-  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+  number: 1
+  script: {{ PYTHON }} -m pip install . -vv
   noarch: python
   entry_points:
     - rethinkdb-import = rethinkdb._import:main
