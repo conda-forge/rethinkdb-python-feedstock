@@ -41,12 +41,12 @@ test:
     - rethinkdb
   commands:
     - pip check
-    - rethinkdb-import -h
-    - rethinkdb-dump -h
-    - rethinkdb-export -h
-    - rethinkdb-restore -h
-    - rethinkdb-index-rebuild -h
-    - rethinkdb-repl -h
+    - rethinkdb-import --help
+    - rethinkdb-dump --help
+    - rethinkdb-export --help
+    - rethinkdb-restore --help
+    - rethinkdb-index-rebuild --help
+    - rethinkdb-repl --help
   requires:
     - pip
     - python {{ python_min }}
