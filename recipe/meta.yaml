@@ -41,6 +41,12 @@ test:
     - rethinkdb
   commands:
     - pip check
+    - rethinkdb-import -h
+    - rethinkdb-dump -h
+    - rethinkdb-export -h
+    - rethinkdb-restore -h
+    - rethinkdb-index-rebuild -h
+    - rethinkdb-repl -h
   requires:
     - pip
     - python {{ python_min }}
