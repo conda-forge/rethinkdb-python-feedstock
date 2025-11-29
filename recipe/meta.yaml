@@ -8,9 +8,11 @@ package:
 source:
   url: https://pypi.org/packages/source/{{ name[0] }}/rethinkdb/rethinkdb-{{ version }}.tar.gz
   sha256: 3634e03ee13dd637fd7196b80474bf44c64d3eba1dd069ea92b94926702a60bd
+  patches:
+    - fix_help_action.patch
 
 build:
-  number: 1
+  number: 3
   script: {{ PYTHON }} -m pip install . -vv
   noarch: python
   entry_points:
@@ -41,6 +43,12 @@ test:
     - rethinkdb
   commands:
     - pip check
+    - rethinkdb-import --help
+    - rethinkdb-dump --help
+    - rethinkdb-export --help
+    - rethinkdb-restore --help
+    - rethinkdb-index-rebuild --help
+    - rethinkdb-repl --help
   requires:
     - pip
     - python {{ python_min }}

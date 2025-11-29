@@ -1,0 +1,12 @@
+diff --git a/rethinkdb/utils_common.py b/rethinkdb/utils_common.py
+index 1234567..890abcd 100644
+--- a/rethinkdb/utils_common.py
++++ b/rethinkdb/utils_common.py
+@@ -300,7 +300,7 @@ class CommonOptionsParser(optparse.OptionParser, object):
+
+             def take_action(self, action, dest, opt, value, values, parser):
+-                if dest is None:
++                if dest is None and action not in ("help", "version"):
+                     raise AssertionError("Destination can not be none")
+
+                 if action == "add_key":
