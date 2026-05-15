@@ -1,0 +1,77 @@
+schema_version: 1
+
+context:
+  name: rethinkdb-python
+  version: "2.4.10.post1"
+  python_min: "3.10"
+
+package:
+  name: ${{ name|lower }}
+  version: ${{ version }}
+
+source:
+  url: https://pypi.org/packages/source/r/rethinkdb/rethinkdb-${{ version }}.tar.gz
+  sha256: 3634e03ee13dd637fd7196b80474bf44c64d3eba1dd069ea92b94926702a60bd
+  patches:
+    - fix_help_action.patch
+
+build:
+  number: 4
+  noarch: python
+  script: ${{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+  python:
+    entry_points:
+      - rethinkdb-import = rethinkdb._import:main
+      - rethinkdb-dump = rethinkdb._dump:main
+      - rethinkdb-export = rethinkdb._export:main
+      - rethinkdb-restore = rethinkdb._restore:main
+      - rethinkdb-index-rebuild = rethinkdb._index_rebuild:main
+      - rethinkdb-repl = rethinkdb.__main__:startInterpreter
+
+requirements:
+  host:
+    - looseversion
+    - pip
+    - python ${{ python_min }}.*
+    - setuptools
+    - six
+  run:
+    - __unix  # to skip win, as a noarch package
+    - python >=${{ python_min }}
+    - looseversion
+    - six
+    - tornado
+    - trio
+
+tests:
+  - python:
+      imports:
+        - rethinkdb
+      pip_check: true
+      python_version: ${{ python_min }}.*
+  - script:
+      - pip check
+      - rethinkdb-import --help
+      - rethinkdb-dump --help
+      - rethinkdb-export --help
+      - rethinkdb-restore --help
+      - rethinkdb-index-rebuild --help
+      - rethinkdb-repl --help
+      - python run_test.py
+    files:
+      recipe:
+        - run_test.py
+    requirements:
+      run:
+        - pip
+        - python ${{ python_min }}.*
+
+about:
+  homepage: https://rethinkdb.com/api/python/
+  summary: Python driver for RethinkDB
+  license: Apache-2.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - jeongseok-meta
