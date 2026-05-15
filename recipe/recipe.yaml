@@ -50,14 +50,20 @@ tests:
       pip_check: true
       python_version: ${{ python_min }}.*
   - script:
+      - pip check
       - rethinkdb-import --help
       - rethinkdb-dump --help
       - rethinkdb-export --help
       - rethinkdb-restore --help
       - rethinkdb-index-rebuild --help
       - rethinkdb-repl --help
+      - python run_test.py
+    files:
+      recipe:
+        - run_test.py
     requirements:
       run:
+        - pip
         - python ${{ python_min }}.*
 
 about:
